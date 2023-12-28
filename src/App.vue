@@ -1,7 +1,9 @@
 <template>
   <v-app class="rounded rounded-md">
     <nav-bar></nav-bar>
-    <router-view></router-view>
+    <v-container>
+      <router-view></router-view>
+    </v-container>
   </v-app>
 </template>
 <script setup>

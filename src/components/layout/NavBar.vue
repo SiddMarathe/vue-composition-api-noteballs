@@ -1,6 +1,4 @@
 <template>
-  <!-- <v-system-bar color="deep-purple darken-3"></v-system-bar> -->
-
   <v-toolbar color="indigo-darken-2" elevation="5" density="compact">
     <v-toolbar-title
       class="font-weight-black text-white text-uppercase text-h5 text-md-h4 text-sm-body-1"
