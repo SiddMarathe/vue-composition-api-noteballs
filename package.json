@@ -17,6 +17,9 @@
     "vuetify": "^3.4.8"
   },
   "devDependencies": {
+    "@mdi/font": "^6.9.96",
+    "@mdi/js": "^6.9.96",
+    "@mdi/svg": "^6.2.95",
     "@rushstack/eslint-patch": "^1.3.3",
     "@vitejs/plugin-vue": "^4.5.2",
     "@vue/eslint-config-prettier": "^8.0.0",
