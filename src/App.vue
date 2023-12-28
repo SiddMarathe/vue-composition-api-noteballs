@@ -1,8 +1,12 @@
 <template>
-  <div class="wrapper">
-    <RouterLink class="v-btn" to="/">Notes</RouterLink>|
-    <RouterLink class="v-btn" to="/stats">stats</RouterLink>
-    <RouterView />
-  </div>
+  <v-app class="rounded rounded-md">
+    <nav-bar></nav-bar>
+    <router-view></router-view>
+  </v-app>
 </template>
-<script setup></script>
+<script setup>
+/*
+imports
+ */
+import NavBar from '@/components/layout/NavBar.vue'
+</script>

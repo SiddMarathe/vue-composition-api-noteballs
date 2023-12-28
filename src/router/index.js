@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ViewNotes from '@/views/ViewNotes.vue'
 import ViewStats from '@/views/ViewStats.vue'
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'notes',
