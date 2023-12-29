@@ -20,7 +20,7 @@
       <v-icon v-if="drawer">mdi-close</v-icon>
     </v-app-bar-nav-icon>
 
-    <v-navigation-drawer :width="144" v-model="drawer" location="right" permanent="">
+    <v-navigation-drawer :width="144" v-model="drawer" location="right" :temporary="true">
       <v-list class="list-link text-center">
         <v-list-item
           v-for="route in routes"

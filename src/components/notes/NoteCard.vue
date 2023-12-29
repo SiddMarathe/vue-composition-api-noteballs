@@ -13,7 +13,7 @@
 
     <v-divider></v-divider>
     <v-card-actions style="display: flex; justify-content: space-between">
-      <v-btn> Edit</v-btn>
+      <router-link :to="`/notes/edit/${props.note.id}`"> Edit</router-link>
       <v-btn @click="() => notesStore.deleteNote(props.note.id)"> Delete</v-btn>
     </v-card-actions>
   </v-card>
