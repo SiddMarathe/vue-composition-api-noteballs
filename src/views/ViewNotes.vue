@@ -23,31 +23,22 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <v-card
+    <NoteCard
       v-for="note in notes"
       :key="note.id"
-      class="mx-auto ma-3"
-      max-width="90%"
-      variant="elevated"
-    >
-      <v-card-item>
-        {{ note.content }}
-      </v-card-item>
-      <v-divider></v-divider>
-      <v-card-actions style="display: flex; justify-content: space-between">
-        <v-btn> Edit</v-btn>
-        <v-btn> Delete</v-btn>
-      </v-card-actions>
-    </v-card>
+      :note="note"
+      @delete-clicked="deleteNote"
+    ></NoteCard>
   </div>
 </template>
 
 <script lang="js" setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
+import NoteCard from '@/components/notes/NoteCard.vue'
 
 const newNote = ref('')
 const newNoteRef = ref(null)
-const notes = reactive([
+const notes = ref([
   {
     id: 'id1',
     content:
@@ -74,10 +65,15 @@ const addNote = () => {
     id: time.toString(),
     content: newNote.value
   }
-  notes.unshift(note)
+  notes.value.unshift(note)
   newNote.value = ''
   newNoteRef.value.focus()
-  console.log('notes', notes)
+}
+
+const deleteNote = (id) => {
+  notes.value = notes.value.filter((note) => {
+    return note.id !== id
+  })
 }
 </script>
 
