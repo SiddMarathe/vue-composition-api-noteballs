@@ -14,13 +14,23 @@
     <v-divider></v-divider>
     <v-card-actions style="display: flex; justify-content: space-between">
       <v-btn> Edit</v-btn>
-      <v-btn @click="handleDelete"> Delete</v-btn>
+      <v-btn @click="() => notesStore.deleteNote(props.note.id)"> Delete</v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+/*
+imports
+ */
 import { computed } from 'vue'
+import { useNoteStore } from '@/store/notesStore.js'
+
+/*
+stores
+ */
+const notesStore = useNoteStore()
+
 /*
 props
  */
@@ -31,15 +41,6 @@ const props = defineProps({
     required: true
   }
 })
-
-/*
-emits
- */
-const emit = defineEmits(['deleteClicked'])
-
-const handleDelete = () => {
-  emit('deleteClicked', props.note.id)
-}
 
 const charLength = computed(() => {
   let length = props.note.content.length

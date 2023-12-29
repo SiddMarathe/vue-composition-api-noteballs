@@ -10,7 +10,8 @@ import * as directives from 'vuetify/directives'
 import '@mdi/font/css/materialdesignicons.css'
 import { mdi } from 'vuetify/iconsets/mdi'
 import { aliases } from 'vuetify/iconsets/fa'
-import 'vuetify/styles' // Global styles
+import 'vuetify/styles'
+import { createPinia } from 'pinia' // Global styles
 
 const icons = {
   defaultSet: 'mdi',
@@ -19,10 +20,11 @@ const icons = {
     mdi
   }
 }
+const pinia = createPinia()
 const vuetify = createVuetify({
   icons,
   components,
   directives
 })
 
-createApp(App).use(router).use(vuetify).mount('#app')
+createApp(App).use(router).use(vuetify).use(pinia).mount('#app')

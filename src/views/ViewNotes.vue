@@ -23,57 +23,23 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <NoteCard
-      v-for="note in notes"
-      :key="note.id"
-      :note="note"
-      @delete-clicked="deleteNote"
-    ></NoteCard>
+    <NoteCard v-for="note in notesStore.notes" :key="note.id" :note="note"></NoteCard>
   </div>
 </template>
 
 <script lang="js" setup>
 import { ref } from 'vue'
 import NoteCard from '@/components/notes/NoteCard.vue'
+import { useNoteStore } from '@/store/notesStore.js'
 
 const newNote = ref('')
 const newNoteRef = ref(null)
-const notes = ref([
-  {
-    id: 'id1',
-    content:
-      ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam dicta dignissimos\n' +
-      '        dolore libero molestias non odit officia pariatur perferendis, porro possimus praesentium\n' +
-      '        reiciendis rerum, saepe soluta suscipit tempora temporibus.'
-  },
-  {
-    id: 'id2',
-    content:
-      ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam dicta dignissimos\n' +
-      '        dolore libero molestias non odit officia pariatur perferendis, porro possimus praesentium\n' +
-      '        reiciendis rerum, saepe soluta suscipit tempora temporibus.'
-  },
-  {
-    id: 'id3',
-    content: 'note'
-  }
-])
+const notesStore = useNoteStore()
 
 const addNote = () => {
-  let time = new Date().getTime()
-  let note = {
-    id: time.toString(),
-    content: newNote.value
-  }
-  notes.value.unshift(note)
+  notesStore.addNote(newNote.value)
   newNote.value = ''
   newNoteRef.value.focus()
-}
-
-const deleteNote = (id) => {
-  notes.value = notes.value.filter((note) => {
-    return note.id !== id
-  })
 }
 </script>
 
