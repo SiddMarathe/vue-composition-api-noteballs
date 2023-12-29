@@ -1,14 +1,14 @@
 <template>
   <div class="notes-view">
-    <AddEditNote ref="addEditNoteRef">
+    <AddEditNote ref="addEditNoteRef" place-holder="Type note.." label="Add Note">
       <template #actions>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
             :disabled="!notesStore.newNote"
-            class="mb-2 ml-1"
+            class="mb-2 mr-3 text-black"
             @click="addNote"
-            variant="outlined"
+            variant="elevated"
           >
             Add
           </v-btn>
