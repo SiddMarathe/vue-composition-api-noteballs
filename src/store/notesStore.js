@@ -3,7 +3,6 @@ import { defineStore } from 'pinia'
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
-      newNote: '',
       notes: [
         {
           id: 'id1',
@@ -30,6 +29,11 @@ export const useNoteStore = defineStore('notesStore', {
         content: content
       }
       this.notes.unshift(note)
+    }
+  },
+  getters: {
+    getNoteContent: (state) => {
+      return state.notes[0].content
     }
   }
 })

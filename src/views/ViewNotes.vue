@@ -1,11 +1,17 @@
 <template>
   <div class="notes-view">
-    <AddEditNote ref="addEditNoteRef" place-holder="Type note.." label="Add Note">
+    <AddEditNote
+      ref="addEditNoteRef"
+      place-holder="Type note.."
+      label="Add Note"
+      v-model="newNote"
+      note-text=""
+    >
       <template #actions>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
-            :disabled="!notesStore.newNote"
+            :disabled="!newNote"
             class="mb-2 mr-3 text-black"
             @click="addNote"
             variant="elevated"
@@ -27,10 +33,11 @@ import { ref } from 'vue' // const newNote = ref('')
 
 const notesStore = useNoteStore()
 const addEditNoteRef = ref(null)
+const newNote = ref('')
 
 const addNote = () => {
-  notesStore.addNote(notesStore.newNote)
-  notesStore.newNote = ''
+  notesStore.addNote(newNote.value)
+  newNote.value = ''
   addEditNoteRef.value.focusTextArea()
 }
 </script>

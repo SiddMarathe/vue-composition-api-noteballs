@@ -1,10 +1,16 @@
 <template>
   <v-container class="edit-view">
-    <AddEditNote bg-color="bg-green-accent-4" place-holder="Note.." label="Edit Note">
+    <AddEditNote
+      bg-color="bg-green-accent-4"
+      place-holder="Note.."
+      label="Edit Note"
+      v-model="noteStore.newNote"
+      note-text=""
+    >
       <template #actions>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!noteStore.newNote" class="mb-2 ml-1" color="black" variant="elevated">
+          <v-btn :disabled="!noteStore.newNote" class="mb-2 ml-1" color="white" variant="elevated">
             Save
           </v-btn>
           <v-btn text class="mb-2 ml-1 bg-red" @click="$router.back()" variant="elevated">
@@ -21,4 +27,5 @@ import AddEditNote from '@/components/notes/AddEditNote.vue'
 import { useNoteStore } from '@/store/notesStore.js'
 
 const noteStore = useNoteStore()
+console.log(noteStore.getNoteContent)
 </script>
