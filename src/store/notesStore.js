@@ -43,6 +43,14 @@ export const useNoteStore = defineStore('notesStore', {
         })
         return note[0].content
       }
+    },
+    totalNotesCount: (state) => {
+      return state.notes.length
+    },
+    totalChars: (state) => {
+      return state.notes
+        .map((note) => note.content.length)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
   }
 })
