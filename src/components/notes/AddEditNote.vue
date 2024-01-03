@@ -13,6 +13,7 @@
             type="text"
             ref="addEditNoteRef"
             @input="handleInputChange"
+            @click:clear="handleInputChange"
           ></v-textarea>
         </v-col>
       </v-row>
@@ -38,7 +39,7 @@ const props = defineProps({
   },
   noteText: {
     type: String,
-    required: true
+    required: false
   },
   label: {
     type: String,

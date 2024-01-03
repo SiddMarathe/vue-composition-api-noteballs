@@ -29,11 +29,20 @@ export const useNoteStore = defineStore('notesStore', {
         content: content
       }
       this.notes.unshift(note)
+    },
+    updateNote(id, content) {
+      let index = this.notes.findIndex((note) => note.id === id)
+      this.notes[index].content = content
     }
   },
   getters: {
     getNoteContent: (state) => {
-      return state.notes[0].content
+      return (id) => {
+        let note = state.notes.filter((note) => {
+          return note.id === id
+        })
+        return note[0].content
+      }
     }
   }
 })
