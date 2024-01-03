@@ -22,16 +22,11 @@
 
     <v-navigation-drawer :width="144" v-model="drawer" location="right" :temporary="true">
       <v-list class="list-link text-center">
-        <v-list-item
-          v-for="route in routes"
-          :key="route.name"
-          :to="route.path"
-          exact
-          active-class="list-link-active"
-        >
-          <v-list-item-subtitle class="text-capitalize text-body-1"
-            >{{ route.name }}
-          </v-list-item-subtitle>
+        <v-list-item to="/" exact active-class="list-link-active">
+          <v-list-item-subtitle class="text-capitalize text-body-1">notes </v-list-item-subtitle>
+        </v-list-item>
+        <v-list-item to="/stats" exact active-class="list-link-active">
+          <v-list-item-subtitle class="text-capitalize text-body-1">stats </v-list-item-subtitle>
         </v-list-item>
         <v-list-item>
           <v-btn @click.stop="drawer = !drawer">
@@ -44,7 +39,6 @@
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
-import { routes } from '@/router/index.js'
 import { ref } from 'vue'
 
 const { smAndUp } = useDisplay()
