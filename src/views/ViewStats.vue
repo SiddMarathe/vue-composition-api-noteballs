@@ -17,6 +17,12 @@
       </tr>
     </tbody>
   </v-table>
+  <v-text-field
+    label="Do you love note balls?"
+    variant="solo"
+    :autofocus="true"
+    type="text"
+  ></v-text-field>
 </template>
 <script setup>
 import { useNoteStore } from '@/store/notesStore.js'
