@@ -1,9 +1,9 @@
 import { watch } from 'vue'
 
-export function useWatchCharacters(stringControl) {
+export function useWatchCharacters(stringControl, lengthCount = 100) {
   watch(stringControl, (newValue) => {
-    if (newValue.length >= 100) {
-      alert('Only 100 words allowed.')
+    if (newValue.length >= lengthCount) {
+      alert(`Only ${lengthCount}  words allowed.`)
     }
   })
 }

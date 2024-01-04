@@ -32,6 +32,6 @@ import { ref } from 'vue'
 
 const store = useNoteStore()
 const comment = ref('')
-useWatchCharacters(comment)
+useWatchCharacters(comment, 10)
 </script>
 <style scoped></style>
