@@ -29,7 +29,8 @@
 import { useNoteStore } from '@/store/notesStore.js'
 import AddEditNote from '@/components/notes/AddEditNote.vue'
 import NoteCard from '@/components/notes/NoteCard.vue'
-import { ref } from 'vue' // const newNote = ref('')
+import { ref } from 'vue'
+import { useWatchCharacters } from '@/use/useWatchCharacters.js' // const newNote = ref('')
 
 const notesStore = useNoteStore()
 const addEditNoteRef = ref(null)
@@ -40,6 +41,8 @@ const addNote = () => {
   newNote.value = ''
   addEditNoteRef.value.focusTextArea()
 }
+
+useWatchCharacters(newNote)
 </script>
 
 <style scoped></style>

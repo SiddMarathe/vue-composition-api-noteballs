@@ -22,11 +22,16 @@
     variant="solo"
     :autofocus="true"
     type="text"
+    v-model="comment"
   ></v-text-field>
 </template>
 <script setup>
 import { useNoteStore } from '@/store/notesStore.js'
+import { useWatchCharacters } from '@/use/useWatchCharacters.js'
+import { ref } from 'vue'
 
 const store = useNoteStore()
+const comment = ref('')
+useWatchCharacters(comment)
 </script>
 <style scoped></style>
