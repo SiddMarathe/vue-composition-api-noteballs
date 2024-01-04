@@ -14,6 +14,7 @@
             ref="addEditNoteRef"
             @input="handleInputChange"
             @click:clear="handleInputChange"
+            v-autofocus
           ></v-textarea>
         </v-col>
       </v-row>
@@ -69,4 +70,13 @@ const focusTextArea = () => {
 defineExpose({
   focusTextArea
 })
+
+/*
+directives
+ */
+const vAutofocus = {
+  mounted: (el) => {
+    el.focus()
+  }
+}
 </script>
