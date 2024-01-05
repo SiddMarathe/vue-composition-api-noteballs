@@ -13,9 +13,10 @@
 
     <v-divider></v-divider>
     <v-card-actions style="display: flex; justify-content: space-between">
-      <router-link :to="`/notes/edit/${props.note.id}`"> Edit</router-link>
-      <v-btn @click="() => notesStore.deleteNote(props.note.id)"> Delete</v-btn>
+      <router-link class="v-btn" :to="`/notes/edit/${props.note.id}`"> Edit</router-link>
+      <v-btn @click="modals.deleteNote = true"> Delete</v-btn>
     </v-card-actions>
+    <modal-delete-note v-model="modals.deleteNote" :note-id="props.note.id"></modal-delete-note>
   </v-card>
 </template>
 
@@ -23,8 +24,9 @@
 /*
 imports
  */
-import { computed } from 'vue'
+import { computed, reactive } from 'vue'
 import { useNoteStore } from '@/store/notesStore.js'
+import ModalDeleteNote from '@/components/notes/ModalDeleteNote.vue' /*
 
 /*
 stores
@@ -46,5 +48,11 @@ const charLength = computed(() => {
   let length = props.note.content.length
   let des = length > 1 ? 'characters' : 'character'
   return `${length} ${des}`
+})
+/*
+modals
+ */
+const modals = reactive({
+  deleteNote: false
 })
 </script>

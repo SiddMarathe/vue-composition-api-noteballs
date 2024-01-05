@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="12">
           <v-textarea
-            v-model="modelValue"
+            v-model="noteText"
             variant="solo"
             clear-icon="mdi-close-circle"
             :clearable="true"
@@ -31,16 +31,16 @@ import { onMounted, ref } from 'vue'
 
 const addEditNoteRef = ref(null)
 
-const modelValue = ref('')
+const noteText = ref('')
 
 const props = defineProps({
+  modelValue: {
+    type: String,
+    required: true
+  },
   bgColor: {
     type: String,
     default: 'bg-indigo-darken-4'
-  },
-  noteText: {
-    type: String,
-    required: false
   },
   label: {
     type: String,
@@ -52,18 +52,16 @@ const props = defineProps({
   }
 })
 onMounted(() => {
-  modelValue.value = props.noteText
+  noteText.value = props.modelValue
 })
 
 const emit = defineEmits(['update:modelValue'])
 
-const handleInputChange = (event) => {
-  modelValue.value = event.target.value
-  emit('update:modelValue', modelValue.value)
+const handleInputChange = () => {
+  emit('update:modelValue', noteText.value)
 }
 
 const focusTextArea = () => {
-  modelValue.value = ''
   addEditNoteRef.value.focus()
 }
 
