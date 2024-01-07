@@ -16,7 +16,12 @@
       <router-link class="v-btn" :to="`/notes/edit/${props.note.id}`"> Edit</router-link>
       <v-btn @click="modals.deleteNote = true"> Delete</v-btn>
     </v-card-actions>
-    <modal-delete-note v-model="modals.deleteNote" :note-id="props.note.id"></modal-delete-note>
+    <v-dialog v-model="modals.deleteNote" width="auto">
+      <modal-delete-note
+        @close="modals.deleteNote = false"
+        :note-id="props.note.id"
+      ></modal-delete-note>
+    </v-dialog>
   </v-card>
 </template>
 
@@ -25,13 +30,8 @@
 imports
  */
 import { computed, reactive } from 'vue'
-import { useNoteStore } from '@/store/notesStore.js'
 import ModalDeleteNote from '@/components/notes/ModalDeleteNote.vue' /*
 
-/*
-stores
- */
-const notesStore = useNoteStore()
 
 /*
 props
