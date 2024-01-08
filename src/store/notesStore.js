@@ -1,32 +1,28 @@
 import { defineStore } from 'pinia'
 import { db } from '@/js/firebase.js'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, onSnapshot, query } from 'firebase/firestore'
 
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
-      notes: [
-        // {
-        //   id: 'id1',
-        //   content:
-        //     ' Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aliquam dicta dignissimos'
-        // },
-        // {
-        //   id: 'id3',
-        //   content: 'note'
-        // }
-      ]
+      notes: []
     }
   },
   actions: {
     async getNotes() {
-      const querySnapshot = await getDocs(collection(db, 'notes'))
-      querySnapshot.forEach((doc) => {
-        let note = {
-          id: doc.id,
-          content: doc.data().content
-        }
-        this.notes.push(note)
+      // This will update the notes when there is any change to database
+      const q = query(collection(db, 'notes'))
+      onSnapshot(q, (querySnapshot) => {
+        const updatedNotes = []
+        querySnapshot.forEach((doc) => {
+          let note = {
+            id: doc.id,
+            content: doc.data().content
+          }
+          updatedNotes.push(note)
+        })
+        this.notes = [...updatedNotes]
+        console.log('Current notes in CA: ', this.notes)
       })
     },
     deleteNote(id) {
