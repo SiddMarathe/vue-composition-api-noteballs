@@ -25,9 +25,11 @@ export const useNoteStore = defineStore('notesStore', {
       onSnapshot(q, (querySnapshot) => {
         const updatedNotes = []
         querySnapshot.forEach((doc) => {
+          let data = doc.data()
           let note = {
             id: doc.id,
-            content: doc.data().content
+            content: data.content,
+            date: data.date.seconds * 1000 + data.date.nanoseconds / 1000000
           }
           updatedNotes.push(note)
         })

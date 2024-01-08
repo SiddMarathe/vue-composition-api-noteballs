@@ -8,8 +8,22 @@
     <v-card-text>
       {{ note.content }}
     </v-card-text>
-    <v-spacer></v-spacer>
-    <div class="align-self-end justify-end mr-1 v-card-subtitle mb-4">{{ charLength }}</div>
+    <v-row class="mt-1 ma-1">
+      <v-col
+        class="align-self-start justify-start mb-4 ml-q v-card-subtitle"
+        style="text-align: left"
+        cols="6"
+      >
+        {{ formatted }}
+      </v-col>
+      <v-col
+        cols="6"
+        class="align-self-end justify-end mb-4 v-card-subtitle"
+        style="text-align: right"
+      >
+        {{ charLength }}</v-col
+      >
+    </v-row>
 
     <v-divider></v-divider>
     <v-card-actions style="display: flex; justify-content: space-between">
@@ -30,7 +44,8 @@
 imports
  */
 import { computed, reactive } from 'vue'
-import ModalDeleteNote from '@/components/notes/ModalDeleteNote.vue' /*
+import ModalDeleteNote from '@/components/notes/ModalDeleteNote.vue'
+import { useDateFormat } from '@vueuse/core' /*
 
 
 /*
@@ -49,6 +64,7 @@ const charLength = computed(() => {
   let des = length > 1 ? 'characters' : 'character'
   return `${length} ${des}`
 })
+const formatted = useDateFormat(props.note.date, 'YYYY-MM-DD HH:mm:ss')
 /*
 modals
  */
