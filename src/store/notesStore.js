@@ -1,7 +1,17 @@
 import { defineStore } from 'pinia'
 import { db } from '@/js/firebase.js'
-import { collection, onSnapshot, query } from 'firebase/firestore'
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  orderBy,
+  query,
+  updateDoc
+} from 'firebase/firestore'
 
+const notesCollectionRef = collection(db, 'notes')
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
@@ -11,7 +21,7 @@ export const useNoteStore = defineStore('notesStore', {
   actions: {
     async getNotes() {
       // This will update the notes when there is any change to database
-      const q = query(collection(db, 'notes'))
+      const q = query(notesCollectionRef, orderBy('date', 'desc'))
       onSnapshot(q, (querySnapshot) => {
         const updatedNotes = []
         querySnapshot.forEach((doc) => {
@@ -22,25 +32,25 @@ export const useNoteStore = defineStore('notesStore', {
           updatedNotes.push(note)
         })
         this.notes = [...updatedNotes]
-        console.log('Current notes in CA: ', this.notes)
       })
     },
-    deleteNote(id) {
-      this.notes = this.notes.filter((note) => {
-        return note.id !== id
-      })
+    async deleteNote(id) {
+      await deleteDoc(doc(notesCollectionRef, id))
     },
-    addNote(content) {
-      let time = new Date().getTime()
+    async addNote(content) {
       let note = {
-        id: time.toString(),
-        content: content
+        content: content,
+        date: new Date()
       }
-      this.notes.unshift(note)
+      // Add a new document with a generated id.
+      const docRef = await addDoc(notesCollectionRef, note)
+      console.log('Document written with ID: ', docRef.id)
     },
-    updateNote(id, content) {
-      let index = this.notes.findIndex((note) => note.id === id)
-      this.notes[index].content = content
+    async updateNote(id, content) {
+      const documentReference = doc(notesCollectionRef, id)
+      await updateDoc(documentReference, {
+        content
+      })
     }
   },
   getters: {
