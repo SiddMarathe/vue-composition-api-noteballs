@@ -62,6 +62,7 @@ const handleInputChange = () => {
 }
 
 const focusTextArea = () => {
+  noteText.value = ''
   addEditNoteRef.value.focus()
 }
 
