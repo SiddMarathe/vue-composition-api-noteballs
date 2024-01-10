@@ -15,11 +15,14 @@ const notesCollectionRef = collection(db, 'notes')
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
-      notes: []
+      notes: [],
+      loadingNotes: false
     }
   },
   actions: {
     async getNotes() {
+      this.loadingNotes = true
+      console.log('loadingNote', this.loadingNotes)
       // This will update the notes when there is any change to database
       const q = query(notesCollectionRef, orderBy('date', 'desc'))
       onSnapshot(q, (querySnapshot) => {
@@ -34,6 +37,7 @@ export const useNoteStore = defineStore('notesStore', {
           updatedNotes.push(note)
         })
         this.notes = [...updatedNotes]
+        this.loadingNotes = false
       })
     },
     async deleteNote(id) {

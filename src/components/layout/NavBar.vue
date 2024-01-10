@@ -36,14 +36,17 @@
       </v-list>
     </v-navigation-drawer>
   </v-toolbar>
+  <v-progress-linear v-if="store.loadingNotes" color="primary" indeterminate></v-progress-linear>
 </template>
 <script setup>
 import { useDisplay } from 'vuetify'
 import { ref } from 'vue'
+import { useNoteStore } from '@/store/notesStore.js'
 
 const { smAndUp } = useDisplay()
 
 const drawer = ref(false)
+const store = useNoteStore()
 </script>
 
 <style scoped>

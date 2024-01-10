@@ -22,6 +22,9 @@
       </template>
     </AddEditNote>
     <NoteCard v-for="note in notesStore.notes" :key="note.id" :note="note"></NoteCard>
+    <v-container v-if="!notesStore.notes.length" class="text-center mt-10 v-card-subtitle">
+      No notes here yet...
+    </v-container>
   </div>
 </template>
 
