@@ -57,12 +57,16 @@
         <v-icon icon="mdi-chevron-right" end></v-icon>
       </v-btn>
     </v-card-actions>
+    <v-snackbar v-model="snack.display" :color="snack.color">{{ snack.message }} </v-snackbar>
   </v-card>
 </template>
 <script setup>
 import * as yup from 'yup'
 import { useField, useForm } from 'vee-validate'
+import { useAuthStore } from '@/store/authStore.js'
+import { reactive } from 'vue'
 
+const authStore = useAuthStore()
 const { handleSubmit, handleReset } = useForm({
   validationSchema: {
     firstName: yup.string().required().min(5),
@@ -90,5 +94,27 @@ const firstName = useField('firstName')
 const lastName = useField('lastName')
 const terms = useField('terms')
 
-const onSubmit = handleSubmit((values) => alert(JSON.stringify(values, null, 2)))
+const snack = reactive({})
+
+const onSubmit = handleSubmit(async (values) => {
+  if (values) {
+    let registered = await authStore.registerUser({
+      email: email.value.value,
+      password: password.value.value
+    })
+    if (registered) {
+      snack.display = true
+      snack.message = 'You are Signed Up successfully!'
+      snack.color = 'green'
+    } else {
+      snack.display = true
+      snack.message = 'Something went wrong, please connect with admin or try again!'
+      snack.color = 'red'
+    }
+
+    handleReset()
+  } else {
+    console.error('No values in the from')
+  }
+})
 </script>

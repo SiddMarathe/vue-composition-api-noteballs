@@ -1,11 +1,11 @@
 <template>
   <v-toolbar color="indigo-darken-2" elevation="5" density="compact">
+    <template v-slot:prepend></template>
     <v-toolbar-title
       class="font-weight-black text-white text-uppercase text-h5 text-md-h4 text-sm-body-1"
     >
       Note balls
     </v-toolbar-title>
-
     <v-spacer></v-spacer>
     <v-toolbar-items variant="text" v-if="smAndUp">
       <router-link class="router-link v-btn" active-class="router-link-active" to="/"
@@ -14,6 +14,8 @@
       <router-link class="router-link v-btn" active-class="router-link-active" icon to="/stats">
         stats
       </router-link>
+      <!--      change the Login style add a icon and menu-->
+      <v-btn @click="handleLogin">Login</v-btn>
     </v-toolbar-items>
     <v-app-bar-nav-icon v-if="!smAndUp" @click.stop="drawer = !drawer">
       <v-icon v-if="!drawer">mdi-menu</v-icon>
@@ -23,10 +25,15 @@
     <v-navigation-drawer :width="144" v-model="drawer" location="right" :temporary="true">
       <v-list class="list-link text-center">
         <v-list-item to="/" exact active-class="list-link-active">
-          <v-list-item-subtitle class="text-capitalize text-body-1">notes </v-list-item-subtitle>
+          <v-list-item-subtitle class="text-capitalize text-body-1">notes</v-list-item-subtitle>
         </v-list-item>
         <v-list-item to="/stats" exact active-class="list-link-active">
-          <v-list-item-subtitle class="text-capitalize text-body-1">stats </v-list-item-subtitle>
+          <v-list-item-subtitle class="text-capitalize text-body-1">stats</v-list-item-subtitle>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-subtitle @click="handleLogin" class="text-capitalize text-body-1"
+            >Login
+          </v-list-item-subtitle>
         </v-list-item>
         <v-list-item>
           <v-btn @click.stop="drawer = !drawer">
@@ -42,11 +49,16 @@
 import { useDisplay } from 'vuetify'
 import { ref } from 'vue'
 import { useNoteStore } from '@/store/notesStore.js'
+import router from '@/router/index.js'
 
 const { smAndUp } = useDisplay()
 
 const drawer = ref(false)
 const store = useNoteStore()
+
+const handleLogin = () => {
+  router.push('auth')
+}
 </script>
 
 <style scoped>
