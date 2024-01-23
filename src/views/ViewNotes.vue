@@ -32,7 +32,7 @@
 import { useNoteStore } from '@/store/notesStore.js'
 import AddEditNote from '@/components/notes/AddEditNote.vue'
 import NoteCard from '@/components/notes/NoteCard.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useWatchCharacters } from '@/use/useWatchCharacters.js' // const newNote = ref('')
 
 const notesStore = useNoteStore()
@@ -46,6 +46,9 @@ const addNote = () => {
 }
 
 useWatchCharacters(newNote, 100)
+onMounted(() => {
+  notesStore.getNotes()
+})
 </script>
 
 <style scoped></style>

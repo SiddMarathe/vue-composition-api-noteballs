@@ -11,11 +11,11 @@
 imports
  */
 import NavBar from '@/components/layout/NavBar.vue'
-import { useNoteStore } from '@/store/notesStore.js'
 import { onMounted } from 'vue'
+import { useAuthStore } from '@/store/authStore.js'
 
-const noteStore = useNoteStore()
+const authStore = useAuthStore()
 onMounted(() => {
-  noteStore.getNotes()
+  authStore.init()
 })
 </script>

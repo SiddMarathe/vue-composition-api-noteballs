@@ -15,7 +15,7 @@
         stats
       </router-link>
       <!--      change the Login style add a icon and menu-->
-      <v-btn @click="handleLogin">Login</v-btn>
+      <v-btn @click="handleAuth">{{ getAuthBtnText() }} </v-btn>
     </v-toolbar-items>
     <v-app-bar-nav-icon v-if="!smAndUp" @click.stop="drawer = !drawer">
       <v-icon v-if="!drawer">mdi-menu</v-icon>
@@ -31,8 +31,8 @@
           <v-list-item-subtitle class="text-capitalize text-body-1">stats</v-list-item-subtitle>
         </v-list-item>
         <v-list-item>
-          <v-list-item-subtitle @click="handleLogin" class="text-capitalize text-body-1"
-            >Login
+          <v-list-item-subtitle @click="handleAuth" class="text-capitalize text-body-1"
+            >{{ getAuthBtnText() }}
           </v-list-item-subtitle>
         </v-list-item>
         <v-list-item>
@@ -49,15 +49,23 @@
 import { useDisplay } from 'vuetify'
 import { ref } from 'vue'
 import { useNoteStore } from '@/store/notesStore.js'
+import { useAuthStore } from '@/store/authStore.js'
 import router from '@/router/index.js'
 
 const { smAndUp } = useDisplay()
 
 const drawer = ref(false)
 const store = useNoteStore()
+const authStore = useAuthStore()
 
-const handleLogin = () => {
-  router.push('auth')
+const handleAuth = () => {
+  if (authStore.user.id) {
+    authStore.logoutUser()
+  }
+  router.push('/auth')
+}
+const getAuthBtnText = () => {
+  return authStore.user.id ? 'Logout' : 'Login'
 }
 </script>
 

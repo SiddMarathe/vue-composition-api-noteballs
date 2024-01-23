@@ -63,15 +63,18 @@
               <v-icon icon="mdi-chevron-right"></v-icon>
             </a>
           </v-card-text>
+          <v-snackbar v-model="snack.display" :color="snack.color">{{ snack.message }} </v-snackbar>
         </v-card>
       </div>
     </form>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
+import { useAuthStore } from '@/store/authStore.js'
+import router from '@/router/index.js'
 
 const visible = ref(false)
 const { handleSubmit } = useForm({
@@ -80,9 +83,26 @@ const { handleSubmit } = useForm({
     password: yup.string().required()
   }
 })
+const snack = reactive({})
+const authStore = useAuthStore()
 const emits = defineEmits(['register'])
 const password = useField('password')
 const email = useField('email')
-const onSubmit = handleSubmit((values) => alert(JSON.stringify(values, null, 2)))
+const onSubmit = handleSubmit(async () => {
+  let logged = await authStore.loginUser({
+    email: email.value.value,
+    password: password.value.value
+  })
+  if (logged) {
+    snack.display = true
+    snack.color = 'green'
+    snack.message = 'Logged in successfully!'
+    await router.push('/')
+  } else {
+    snack.display = true
+    snack.color = 'warning'
+    snack.message = 'Error'
+  }
+})
 </script>
 <style scoped></style>
