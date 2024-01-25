@@ -14,18 +14,26 @@ export const useAuthStore = defineStore('authStore', {
     }
   },
   actions: {
+    homeRoute: function () {
+      this.router.push('/')
+    },
+    authRoute: function () {
+      this.router.replace('/auth')
+    },
     registerUser(cred) {
       console.log('called')
       return createUserWithEmailAndPassword(auth, cred.email, cred.password)
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user
+          this.homeRoute()
           return true
         })
         .catch((error) => {
           const errorCode = error.code
           const errorMessage = error.message
           console.log('error', errorMessage)
+          this.authRoute()
           return false
         })
     },
@@ -33,10 +41,12 @@ export const useAuthStore = defineStore('authStore', {
       console.log(cred)
       return signInWithEmailAndPassword(auth, cred.email, cred.password)
         .then((userCred) => {
+          this.homeRoute()
           return true
         })
         .catch((error) => {
           console.log(error)
+          this.authRoute()
           return false
         })
     },
@@ -49,6 +59,7 @@ export const useAuthStore = defineStore('authStore', {
         } else {
           this.user = {}
           console.log('user logged out')
+          this.authRoute()
         }
       })
     },
