@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   signOut
 } from 'firebase/auth'
+import { useNoteStore } from '@/store/notesStore.js'
 
 export const useAuthStore = defineStore('authStore', {
   state: () => {
@@ -41,21 +42,21 @@ export const useAuthStore = defineStore('authStore', {
       console.log(cred)
       return signInWithEmailAndPassword(auth, cred.email, cred.password)
         .then((userCred) => {
-          this.homeRoute()
           return true
         })
         .catch((error) => {
           console.log(error)
-          this.authRoute()
           return false
         })
     },
-    init() {
-      onAuthStateChanged(auth, (user) => {
+    async init() {
+      const noteStore = useNoteStore()
+      onAuthStateChanged(auth, async (user) => {
         if (user) {
           this.user.id = user.uid
           this.user.email = user.email
-          console.log('user', this.user)
+          await noteStore.init()
+          this.homeRoute()
         } else {
           this.user = {}
           console.log('user logged out')

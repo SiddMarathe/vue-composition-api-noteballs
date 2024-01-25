@@ -46,9 +46,6 @@ const addNote = () => {
 }
 
 useWatchCharacters(newNote, 100)
-onMounted(() => {
-  notesStore.getNotes()
-})
 </script>
 
 <style scoped></style>

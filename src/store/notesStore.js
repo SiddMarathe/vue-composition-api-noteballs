@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { db } from '@/js/firebase.js'
 import {
   addDoc,
   collection,
@@ -10,8 +9,11 @@ import {
   query,
   updateDoc
 } from 'firebase/firestore'
+import { useAuthStore } from '@/store/authStore.js'
+import { db } from '@/js/firebase.js'
 
-const notesCollectionRef = collection(db, 'notes')
+let notesCollectionRef
+let notesCollectionQuery
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
@@ -20,12 +22,17 @@ export const useNoteStore = defineStore('notesStore', {
     }
   },
   actions: {
+    async init() {
+      const authStore = useAuthStore()
+      notesCollectionRef = collection(db, 'users', authStore.user.id, 'notes')
+      notesCollectionQuery = query(notesCollectionRef, orderBy('date', 'desc'))
+      await this.getNotes()
+    },
+
     async getNotes() {
       this.loadingNotes = true
-      console.log('loadingNote', this.loadingNotes)
       // This will update the notes when there is any change to database
-      const q = query(notesCollectionRef, orderBy('date', 'desc'))
-      onSnapshot(q, (querySnapshot) => {
+      onSnapshot(notesCollectionQuery, (querySnapshot) => {
         const updatedNotes = []
         querySnapshot.forEach((doc) => {
           let data = doc.data()
