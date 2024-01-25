@@ -15,33 +15,31 @@ export const useAuthStore = defineStore('authStore', {
     }
   },
   actions: {
-    homeRoute: function () {
-      this.router.push('/')
+    homeRoute: async function () {
+      await this.router.push('/')
     },
-    authRoute: function () {
-      this.router.replace('/auth')
+    authRoute: async function () {
+      await this.router.replace('/auth')
     },
     registerUser(cred) {
       console.log('called')
       return createUserWithEmailAndPassword(auth, cred.email, cred.password)
-        .then((userCredential) => {
+        .then(async () => {
           // Signed up
-          const user = userCredential.user
-          this.homeRoute()
+          await this.homeRoute()
           return true
         })
-        .catch((error) => {
-          const errorCode = error.code
+        .catch(async (error) => {
           const errorMessage = error.message
           console.log('error', errorMessage)
-          this.authRoute()
+          await this.authRoute()
           return false
         })
     },
     loginUser(cred) {
       console.log(cred)
       return signInWithEmailAndPassword(auth, cred.email, cred.password)
-        .then((userCred) => {
+        .then(() => {
           return true
         })
         .catch((error) => {
@@ -56,11 +54,10 @@ export const useAuthStore = defineStore('authStore', {
           this.user.id = user.uid
           this.user.email = user.email
           await noteStore.init()
-          this.homeRoute()
+          await this.homeRoute()
         } else {
           this.user = {}
-          console.log('user logged out')
-          this.authRoute()
+          await this.authRoute()
           noteStore.clearNotes()
         }
       })

@@ -62,7 +62,7 @@ const handleAuth = () => {
   if (authStore.user.id) {
     authStore.logoutUser()
   }
-  // router.push('/auth')
+  router.push('/auth')
 }
 const getAuthBtnText = () => {
   return authStore.user.id ? 'Logout' : 'Login'
