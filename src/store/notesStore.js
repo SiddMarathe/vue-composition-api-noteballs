@@ -14,6 +14,7 @@ import { db } from '@/js/firebase.js'
 
 let notesCollectionRef
 let notesCollectionQuery
+let unsubscribeNotes = null
 export const useNoteStore = defineStore('notesStore', {
   state: () => {
     return {
@@ -32,7 +33,7 @@ export const useNoteStore = defineStore('notesStore', {
     async getNotes() {
       this.loadingNotes = true
       // This will update the notes when there is any change to database
-      onSnapshot(notesCollectionQuery, (querySnapshot) => {
+      unsubscribeNotes = onSnapshot(notesCollectionQuery, (querySnapshot) => {
         const updatedNotes = []
         querySnapshot.forEach((doc) => {
           let data = doc.data()
@@ -49,6 +50,9 @@ export const useNoteStore = defineStore('notesStore', {
     },
     clearNotes() {
       this.notes = []
+      if (unsubscribeNotes) {
+        unsubscribeNotes()
+      }
     },
     async deleteNote(id) {
       await deleteDoc(doc(notesCollectionRef, id))
