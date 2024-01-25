@@ -61,6 +61,7 @@ export const useAuthStore = defineStore('authStore', {
           this.user = {}
           console.log('user logged out')
           this.authRoute()
+          noteStore.clearNotes()
         }
       })
     },

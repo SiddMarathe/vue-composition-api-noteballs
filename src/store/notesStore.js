@@ -47,6 +47,9 @@ export const useNoteStore = defineStore('notesStore', {
         this.loadingNotes = false
       })
     },
+    clearNotes() {
+      this.notes = []
+    },
     async deleteNote(id) {
       await deleteDoc(doc(notesCollectionRef, id))
     },
