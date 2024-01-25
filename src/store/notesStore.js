@@ -69,8 +69,7 @@ export const useNoteStore = defineStore('notesStore', {
         date: new Date()
       }
       // Add a new document with a generated id.
-      const docRef = await addDoc(notesCollectionRef, note)
-      console.log('Document written with ID: ', docRef.id)
+      await addDoc(notesCollectionRef, note)
     },
     async updateNote(id, content) {
       const documentReference = doc(notesCollectionRef, id)
