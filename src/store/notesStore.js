@@ -33,20 +33,26 @@ export const useNoteStore = defineStore('notesStore', {
     async getNotes() {
       this.loadingNotes = true
       // This will update the notes when there is any change to database
-      unsubscribeNotes = onSnapshot(notesCollectionQuery, (querySnapshot) => {
-        const updatedNotes = []
-        querySnapshot.forEach((doc) => {
-          let data = doc.data()
-          let note = {
-            id: doc.id,
-            content: data.content,
-            date: data.date.seconds * 1000 + data.date.nanoseconds / 1000000
-          }
-          updatedNotes.push(note)
-        })
-        this.notes = [...updatedNotes]
-        this.loadingNotes = false
-      })
+      unsubscribeNotes = onSnapshot(
+        notesCollectionQuery,
+        (querySnapshot) => {
+          const updatedNotes = []
+          querySnapshot.forEach((doc) => {
+            let data = doc.data()
+            let note = {
+              id: doc.id,
+              content: data.content,
+              date: data.date.seconds * 1000 + data.date.nanoseconds / 1000000
+            }
+            updatedNotes.push(note)
+          })
+          this.notes = [...updatedNotes]
+          this.loadingNotes = false
+        },
+        (error) => {
+          console.log('error from firebase', error.message)
+        }
+      )
     },
     clearNotes() {
       this.notes = []
