@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card v-if="authStore.authStoreReady">
     <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="center">
       <v-tab value="1">login</v-tab>
       <v-tab value="2">Register</v-tab>
@@ -19,6 +19,8 @@
 import UserLogin from '@/components/Auth/UserLogin.vue'
 import UserRegister from '@/components/Auth/UserRegister.vue'
 import { ref } from 'vue'
+import { useAuthStore } from '@/store/authStore.js'
 
 const tab = ref('1')
+const authStore = useAuthStore()
 </script>

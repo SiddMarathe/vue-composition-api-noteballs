@@ -32,15 +32,11 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to, from) => {
+router.beforeEach((to) => {
   const authStore = useAuthStore()
-  if (!authStore.user.id) {
+  if (!authStore.user.id && authStore.authStoreReady) {
     if (to.name !== 'auth') {
       return { name: 'auth' }
-    }
-  } else {
-    if (to.name === 'auth') {
-      return false // Do not let the user navigate to another route
     }
   }
 })

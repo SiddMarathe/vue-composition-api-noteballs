@@ -7,11 +7,13 @@ import {
   signOut
 } from 'firebase/auth'
 import { useNoteStore } from '@/store/notesStore.js'
+import router from '@/router/index.js'
 
 export const useAuthStore = defineStore('authStore', {
   state: () => {
     return {
-      user: {}
+      user: {},
+      authStoreReady: false
     }
   },
   actions: {
@@ -49,17 +51,18 @@ export const useAuthStore = defineStore('authStore', {
     },
     async init() {
       const noteStore = useNoteStore()
-      onAuthStateChanged(auth, async (user) => {
+      await onAuthStateChanged(auth, async (user) => {
         if (user) {
           this.user.id = user.uid
           this.user.email = user.email
           await noteStore.init()
-          await this.homeRoute()
+          await router.replace(router.currentRoute.value.fullPath)
         } else {
           this.user = {}
           await this.authRoute()
           noteStore.clearNotes()
         }
+        this.authStoreReady = true
       })
     },
 

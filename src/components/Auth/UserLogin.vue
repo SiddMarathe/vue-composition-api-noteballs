@@ -97,6 +97,7 @@ const onSubmit = handleSubmit(async () => {
     snack.display = true
     snack.color = 'green'
     snack.message = 'Logged in successfully!'
+    await router.push('/')
   } else {
     snack.display = true
     snack.color = 'warning'
